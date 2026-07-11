@@ -61,28 +61,31 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "cicd-java-project"
-            GIT_USER_NAME = "rohit-badgujjar"
-        }
-        steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-               sh '''
-                    pwd
-                    ls -la
-                    git rev-parse --show-toplevel
-                    git status
-                    '''
+    environment {
+        GIT_REPO_NAME = "cicd-java-project"
+        GIT_USER_NAME = "rohit-badgujjar"
+    }
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            sh '''
+                # Mark Jenkins workspace as a safe Git repository
+                git config --global --add safe.directory "$WORKSPACE"
 
-                sh '''
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-project-complete-cicd-setup/spring-boot-app-manifests/*.yaml
-                    git add java-project-complete-cicd-setup/spring-boot-app-manifests
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
-            }
+                # Configure Git author
+                git config --global user.email "rohitbadgujar937@gmail.com"
+                git config --global user.name "rohit-badgujjar"
+
+                # Update image tag in all YAML files
+                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-project-complete-cicd-setup/spring-boot-app-manifests/*.yaml
+
+                # Commit and push changes
+                git add java-project-complete-cicd-setup/spring-boot-app-manifests
+                git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+
+                git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+            '''
         }
     }
+}
   }
 }
