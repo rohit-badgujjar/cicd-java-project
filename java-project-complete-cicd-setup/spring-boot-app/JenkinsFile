@@ -19,6 +19,21 @@ pipeline {
         sh 'cd java-project-complete-cicd-setup/spring-boot-app && mvn clean package'
       }
     }
+
+     stage('Verify Agent') {
+    steps {
+        sh '''
+            echo "===== JAVA ====="
+            java -version
+
+            echo "===== MAVEN ====="
+            mvn -version
+
+            echo "===== DOCKER ====="
+            docker --version
+        '''
+    }
+}
     stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://13.60.252.175:9000"
