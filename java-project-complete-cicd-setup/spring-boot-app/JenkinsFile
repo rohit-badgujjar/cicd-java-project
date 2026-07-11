@@ -68,18 +68,13 @@ pipeline {
     steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
             sh '''
-                # Mark Jenkins workspace as a safe Git repository
                 git config --global --add safe.directory "$WORKSPACE"
-
-                # Configure Git author
                 git config --global user.email "rohitbadgujar937@gmail.com"
                 git config --global user.name "rohit-badgujjar"
 
-                # Update image tag in all YAML files
-                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-project-complete-cicd-setup/spring-boot-app-manifests/*.yaml
+                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-project-complete-cicd-setup/spring-boot-app-manifests/deployment.yml
 
-                # Commit and push changes
-                git add java-project-complete-cicd-setup/spring-boot-app-manifests
+                git add java-project-complete-cicd-setup/spring-boot-app-manifests/deployment.yml
                 git commit -m "Update deployment image to version ${BUILD_NUMBER}"
 
                 git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
