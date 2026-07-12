@@ -1,6 +1,5 @@
 # 🚀 Ultimate Java CI/CD Pipeline using Jenkins, Docker, Kubernetes & Argo CD
 
-![Architecture](Gemini_Generated_Image_6zfvur6zfvur6zfv.png)
 
 ## 📌 Project Overview
 
@@ -34,7 +33,7 @@ Whenever a developer pushes code to GitHub, the pipeline automatically:
 
 The complete workflow is shown below.
 
-![CI/CD Architecture](Gemini_Generated_Image_6zfvur6zfvur6zfv.png)
+![CI/CD Architecture](java-project-complete-cicd-setup/images/Project-Architecture.png)
 
 ---
 
@@ -166,7 +165,7 @@ This approach ensures:
 
 The complete Jenkins CI pipeline executed successfully.
 
-![Jenkins Pipeline](Screenshot%202026-07-11%20193025.png)
+![Jenkins Pipeline](java-project-complete-cicd-setup/images/Jenkins-passed-stages.png)
 
 ---
 
@@ -174,7 +173,7 @@ The complete Jenkins CI pipeline executed successfully.
 
 Argo CD automatically synchronized the latest deployment after Jenkins updated the Kubernetes manifest.
 
-![Argo CD](Screenshot%202026-07-11%20193219.png)
+![Argo CD](java-project-complete-cicd-setup/images/argocd-deployed-app.png)
 
 ---
 
@@ -182,7 +181,7 @@ Argo CD automatically synchronized the latest deployment after Jenkins updated t
 
 The deployed application is successfully running inside the Kubernetes cluster and is accessible through the exposed service.
 
-![Spring Boot Application](WhatsApp%20Image%202026-07-11%20at%207.25.20%20PM.jpeg)
+![Spring Boot Application](java-project-complete-cicd-setup/images/deployed-app.jpeg)
 
 ---
 
